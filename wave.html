@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduAttend | Login & Sign Up</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<link rel="stylesheet" href="login-page.css">
+</head>
+<body>
+ <div class="ocean">
+    <div class="boat1"></div>
+  </div>
+
+</body>
+  <div class="wave-container">
+    <svg class="wave" viewBox="0 0 1440 320">
+      <path fill="#a78bfa" fill-opacity="1"
+        d="M0,160L60,165.3C120,171,240,181,360,186.7C480,192,600,192,720,186.7C840,181,960,171,1080,144C1200,117,1320,75,1380,53.3L1440,32L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+      </path>
+    </svg>
+  </div>
+
+
+<lottie-player 
+  src="\assets\Animation - 1751695867757.json"
+  class="boat"
+  background="transparent"
+  speed="2"
+  loop
+  autoplay
+></lottie-player>
+
+  <div class="auth-wrapper">
+    <div class="auth-card animate__animated animate__fadeInUp">
+      <div class="auth-left">
+        <lottie-player src="\assets\Animation - 1751688261443.json" background="transparent" speed="1" loop autoplay></lottie-player>
+      </div>
+      <div class="auth-right">
+        <div id="loginSection" class="form-section">
+          <h3 class="text-center mb-4">Welcome to EduAttend</h3>
+          <form id="loginForm">
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" id="loginEmail" required />
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" id="loginPassword" required />
+            </div>
+            <div class="text-danger mb-2" id="loginError"></div>
+            <button type="submit" class="btn btn-primary w-100">Login</button>
+            <div class="loader" id="loginLoader">🎉 Logging you in...</div>
+          </form>
+          <div class="switcher mt-3">
+            New here? <span class="toggle-link" onclick="showRegister()">Sign up now</span>
+          </div>
+        </div>
+
+        <div id="registerSection" class="form-section d-none">
+          <h3 class="text-center mb-4">Create an EduAttend Account</h3>
+          <form id="registerForm">
+            <div class="mb-3">
+              <label>Name</label>
+              <input type="text" class="form-control" id="regName" required />
+            </div>
+            <div class="mb-3">
+              <label>Email</label>
+              <input type="email" class="form-control" id="regEmail" required />
+            </div>
+            <div class="mb-3">
+              <label>Password</label>
+              <input type="password" class="form-control" id="regPassword" required />
+            </div>
+            <div class="mb-3">
+              <label>Role</label>
+              <select class="form-select" id="regRole" required>
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="faculty">Faculty</option>
+              </select>
+            </div>
+            <div class="text-danger mb-2" id="registerError"></div>
+            <button type="submit" class="btn btn-primary w-100">Register</button>
+          </form>
+          <div class="switcher mt-3">
+            Already have an account? <span class="toggle-link" onclick="showLogin()">Login here</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+ <script src="gin-page.js"></script>
+</body>
+</html>
