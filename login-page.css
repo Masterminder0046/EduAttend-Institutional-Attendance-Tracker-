@@ -124,3 +124,21 @@
     right: 110%;
   }
 }
+@media (max-width: 768px) {
+    .auth-card {
+      flex-direction: column;
+    }
+    .auth-left {
+      order: 1;
+    }
+    .auth-right {
+      order: 2;
+    }
+    .boat {
+      width: 160px;
+      bottom: 80px;
+    }
+    .auth-left lottie-player {
+      max-width: 250px;
+    }
+  }
