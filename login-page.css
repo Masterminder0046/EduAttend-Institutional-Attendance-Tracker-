@@ -108,9 +108,10 @@
       display: none;
       text-align: center;
       font-weight: 600;
-      margin-top: 10px;
       color: #7c3aed;
       animation: pulse 1s infinite;
+      margin-top: 8px;
+    min-height: 24px;
     }
 
     @keyframes pulse {
@@ -133,6 +134,15 @@
     right: 110%;
   }
 }
+h3.text-center {
+  animation: fadeInUp 1s ease forwards;
+}
+
+@keyframes fadeInUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
   @media screen and (max-width: 1024px) {
   .auth-card {
     flex-direction: column; /* stack left and right */
