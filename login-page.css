@@ -38,7 +38,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 2rem;
+      flex-direction: column;
+       padding: 1rem;
+       min-height: 100vh;
     }
 
     .auth-card {
@@ -51,6 +53,9 @@
       display: flex;
       overflow: hidden;
       transition: all 0.6s ease;
+      width: 100%;
+      box-sizing: border-box;
+
     }
 
     .auth-left, .auth-right {
@@ -60,16 +65,20 @@
 
     .auth-left {
       background: #e9d8fd;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 300px; 
+  overflow: hidden; 
     }
 
-    .auth-left lottie-player {
-      max-width: 400px;
-    }
-
+.auth-left lottie-player {
+  width: 100%;
+  max-width: 350px; /* ✅ Responsive max-width */
+  height: auto;
+}
     .toggle-link {
       color: #7c3aed;
       cursor: pointer;
@@ -124,21 +133,55 @@
     right: 110%;
   }
 }
-@media (max-width: 768px) {
-    .auth-card {
-      flex-direction: column;
-    }
-    .auth-left {
-      order: 1;
-    }
-    .auth-right {
-      order: 2;
-    }
-    .boat {
-      width: 160px;
-      bottom: 80px;
-    }
-    .auth-left lottie-player {
-      max-width: 250px;
-    }
+  @media screen and (max-width: 1024px) {
+  .auth-card {
+    flex-direction: column; /* stack left and right */
+    max-width: 90%; /* reduce width */
+    padding: 1.5rem;
   }
+
+  .auth-left {
+    padding: 1rem;
+    order: 2; /* move image below form */
+  }
+
+  .auth-right {
+    padding: 1rem;
+    order: 1;
+  }
+
+  .auth-left lottie-player {
+    max-width: 300px;
+  }
+
+  .boat {
+    width: 300px;
+    bottom: 0;
+  }
+
+  .wave svg {
+    height: 80px;
+  }
+   .auth-left lottie-player {
+    max-width: 280px;
+    margin-top: 10px;
+  }
+
+  .auth-card {
+    flex-direction: column;
+}
+  }
+@media screen and (max-width: 768px) {
+  .auth-left lottie-player {
+    max-width: 280px;
+    margin-top: 280px;
+  }
+
+  .auth-card {
+    padding: 1rem;
+  }
+
+  .form-control, .form-select {
+    font-size: 0.95rem;
+  }
+}
