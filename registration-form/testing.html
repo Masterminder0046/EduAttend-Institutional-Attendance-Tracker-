@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduAttend | Animated Registration</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <link rel="stylesheet" href="reg-form.css">
+</head>
+<body>
+
+<div class="bg-animated"></div>
+<div class="bubble-bg">
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+  <span class="bubble"></span>
+</div>
+
+
+<div class="form-card">
+  <h3 class="text-center mb-4"><i class="fas fa-user-plus"></i> Student Registration</h3>
+  <form id="regForm">
+    <div class="form-step active">
+      <label><i class="fas fa-user"></i> Full Name *</label>
+      <input type="text" class="form-control mb-3" id="name" required>
+      <div class="step-controls">
+        <span></span>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-id-badge"></i> Reg. Number *</label>
+      <input type="text" class="form-control mb-3" id="regno" required>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-envelope"></i> Email *</label>
+      <input type="email" class="form-control mb-3" id="email" required>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-phone"></i> Phone *</label>
+      <input type="tel" class="form-control mb-3" id="phone" required>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-building"></i> Department *</label>
+      <select class="form-select mb-3" id="dept" required>
+        <option value="">Select Department</option>
+        <option>CSE</option><option>ECE</option><option>EEE</option><option>MECH</option>
+      </select>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-calendar"></i> Year *</label>
+      <select class="form-select mb-3" id="year" required>
+        <option value="">Select Year</option>
+        <option>I</option><option>II</option><option>III</option><option>IV</option>
+      </select>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <label><i class="fas fa-venus-mars"></i> Gender *</label><br>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" value="Male" required>
+        <label class="form-check-label">Male</label>
+      </div>
+      <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" name="gender" value="Female">
+        <label class="form-check-label">Female</label>
+      </div>
+      <br><br>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+      <div class="position-relative">
+        <label><i class="fas fa-lock"></i> Password *</label>
+        <input type="password" class="form-control mb-3" id="password" required>
+        <span class="eye-icon" onclick="togglePass('password', this)"><i class="fa fa-eye"></i></span>
+      </div>
+      <div class="position-relative">
+        <label><i class="fas fa-lock"></i> Confirm Password *</label>
+        <input type="password" class="form-control mb-3" id="confirmPassword" required>
+        <span class="eye-icon" onclick="togglePass('confirmPassword', this)"><i class="fa fa-eye"></i></span>
+      </div>
+      <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="button" class="btn btn-purple" onclick="nextStep()">Next</button>
+      </div>
+    </div>
+
+    <div class="form-step">
+<div class="preview-box mb-3 p-4 rounded-4 border border-2 border-light text-dark bg-white bg-opacity-25 shadow-lg">
+  <h5 class="text-center text-purple mb-3 fw-bold">🎉 Final Step - Confirm Your Details</h5>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Name:</b> <span id="p_name"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Reg No:</b> <span id="p_regno"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Email:</b> <span id="p_email"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Phone:</b> <span id="p_phone"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Dept:</b> <span id="p_dept"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Year:</b> <span id="p_year"></span>
+  </div>
+  <div class="mb-2 p-2 border-start border-4 border-primary-subtle rounded">
+    <b>Gender:</b> <span id="p_gender"></span>
+  </div>
+</div>
+       <div class="step-controls">
+        <button type="button" class="btn btn-secondary" onclick="prevStep()">Back</button>
+        <button type="submit" class="btn btn-success w-50">Register</button>
+      </div>
+    </div>
+  </form>
+</div>
+<script src="reg-for.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</body>
+</html>
