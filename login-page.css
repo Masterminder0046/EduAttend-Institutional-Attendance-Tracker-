@@ -76,7 +76,11 @@
 
 .auth-left lottie-player {
   width: 100%;
+<<<<<<< HEAD
   max-width: 350px; /* ✅ Responsive max-width */
+=======
+  max-width: 350px;
+>>>>>>> 7a5844d (Initial commit)
   height: auto;
 }
     .toggle-link {
@@ -123,7 +127,11 @@
   position: absolute;
   bottom: -00px;
   width: 460px;
+<<<<<<< HEAD
   right: -100px; /* Start from outside right */
+=======
+  right: -100px; 
+>>>>>>> 7a5844d (Initial commit)
   animation: boatMove 25s linear infinite, boatFloat 3s ease-in-out infinite;
 }
 @keyframes boatMove {
@@ -142,6 +150,7 @@ h3.text-center {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
+<<<<<<< HEAD
 
   @media screen and (max-width: 1024px) {
   .auth-card {
@@ -195,3 +204,71 @@ h3.text-center {
     font-size: 0.95rem;
   }
 }
+=======
+@media screen and (max-width: 1024px) {
+  .auth-card {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .auth-left {
+    order: 2;
+    padding: 1rem;
+  }
+  .auth-right {
+    order: 1;
+    padding: 1rem;
+  }
+  .auth-left lottie-player {
+    max-width: 300px;
+  }
+  .boat {
+    width: 280px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .auth-card {
+    padding: 1rem;
+  }
+  .auth-left lottie-player {
+    max-width: 260px;
+    margin-top: 40px;
+  }
+  .form-control, .form-select {
+    font-size: 0.95rem;
+  }
+  .auth-right form {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .auth-wrapper {
+    padding: 1rem 0.5rem;
+  }
+  .auth-left {
+    padding: 1rem 0.5rem;
+  }
+  .auth-right {
+    padding: 1rem 0.5rem;
+  }
+  .auth-left lottie-player {
+    max-width: 230px;
+  }
+  .btn {
+    font-size: 0.95rem;
+  }
+  h3.text-center {
+    font-size: 1.25rem;
+  }
+  p.text-center {
+    font-size: 0.85rem;
+  }
+}
+#bubbleCanvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  z-index: 0;
+}
+>>>>>>> 7a5844d (Initial commit)
