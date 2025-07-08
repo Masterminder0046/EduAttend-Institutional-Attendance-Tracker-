@@ -76,12 +76,9 @@
 
 .auth-left lottie-player {
   width: 100%;
-<<<<<<< HEAD
   max-width: 350px; /* ✅ Responsive max-width */
-=======
-  max-width: 350px;
->>>>>>> 7a5844d (Initial commit)
-  height: auto;
+ max-width: 350px;
+ height: auto;
 }
     .toggle-link {
       color: #7c3aed;
@@ -127,11 +124,11 @@
   position: absolute;
   bottom: -00px;
   width: 460px;
-<<<<<<< HEAD
+
   right: -100px; /* Start from outside right */
-=======
+
   right: -100px; 
->>>>>>> 7a5844d (Initial commit)
+
   animation: boatMove 25s linear infinite, boatFloat 3s ease-in-out infinite;
 }
 @keyframes boatMove {
@@ -150,7 +147,6 @@ h3.text-center {
   0% { opacity: 0; transform: translateY(20px); }
   100% { opacity: 1; transform: translateY(0); }
 }
-<<<<<<< HEAD
 
   @media screen and (max-width: 1024px) {
   .auth-card {
@@ -204,7 +200,7 @@ h3.text-center {
     font-size: 0.95rem;
   }
 }
-=======
+
 @media screen and (max-width: 1024px) {
   .auth-card {
     flex-direction: column;
@@ -271,4 +267,3 @@ h3.text-center {
   width: 100vw; height: 100vh;
   z-index: 0;
 }
->>>>>>> 7a5844d (Initial commit)
