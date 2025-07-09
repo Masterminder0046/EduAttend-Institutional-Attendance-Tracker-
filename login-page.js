@@ -43,7 +43,9 @@
 
   document.getElementById("registerForm").addEventListener("submit", function(e) {
     e.preventDefault();
+    debugger;
     const name = document.getElementById("regName").value.trim();
+  
     const email = document.getElementById("regEmail").value.trim();
     const password = document.getElementById("regPassword").value.trim();
     const confirm = document.getElementById("confirmPassword").value.trim();
