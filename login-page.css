@@ -1,0 +1,194 @@
+  body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9f7fd;
+      overflow: hidden;
+    }
+
+    .auth-wrapper {
+      position: relative;
+      z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 1rem;
+    }
+
+    .auth-card {
+      backdrop-filter: blur(20px);
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      overflow: hidden;
+      transition: all 0.6s ease;
+    }
+
+    .auth-left, .auth-right {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .auth-left {
+      background: #e9d8fd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    .auth-left lottie-player {
+      max-width: 350px;
+      width: 100%;
+      height: auto;
+    }
+
+    .toggle-link {
+      color: #7c3aed;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .form-control:focus {
+      box-shadow: 0 0 0 0.2rem rgba(124, 58, 237, 0.25);
+      border-color: #a78bfa;
+    }
+
+    .btn-primary {
+      background-color: #7c3aed;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #6d28d9;
+    }
+
+    .loader {
+      display: none;
+      text-align: center;
+      font-weight: 600;
+      color: #7c3aed;
+      animation: pulse 1s infinite;
+      margin-top: 8px;
+      min-height: 24px;
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 1; }
+      100% { opacity: 0.3; }
+    }
+
+
+
+
+.ocean-scene {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+.wave-container {
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.wave {
+  width: 200%;
+  height: auto;
+  animation: waveMove 10s linear infinite;
+}
+
+@keyframes waveMove {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+
+.boat {
+  position: absolute;
+  bottom: 60px;
+  right: -120px;
+  width: 460px;
+  max-width: 100%;
+  z-index: 2;
+  animation: boatMove 30s linear infinite, boatFloat 3s ease-in-out infinite;
+}
+
+@keyframes boatMove {
+  0% { right: -120px; }
+  100% { right: 110%; }
+}
+
+@keyframes boatFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+
+@media (max-width: 1024px) {
+  .boat { width: 320px; bottom: 50px; }
+}
+@media (max-width: 768px) {
+  .boat { width: 250px; bottom: 40px; }
+}
+@media (max-width: 480px) {
+  .boat { width: 180px; bottom: 30px; }
+}
+@media (max-width: 360px) {
+  .boat { width: 150px; bottom: 25px; }
+}
+
+
+    @media screen and (max-width: 1024px) {
+      .auth-card {
+        flex-direction: column;
+      }
+
+      .auth-left lottie-player {
+        max-width: 300px;
+      }
+
+      .auth-left, .auth-right {
+        padding: 1rem;
+      }
+    }
+
+
+    @media screen and (max-width: 768px) {
+      .auth-left lottie-player {
+        max-width: 260px;
+      }
+
+      .form-control, .form-select {
+        font-size: 0.95rem;
+      }
+    }
+
+    @media screen and (max-width: 480px) {
+      .auth-left lottie-player {
+        max-width: 230px;
+      }
+
+      .btn {
+        font-size: 0.95rem;
+      }
+
+      h3.text-center {
+        font-size: 1.25rem;
+      }
+
+      p.text-center {
+        font-size: 0.85rem;
+      }
+    }
