@@ -114,7 +114,7 @@
       <h5 class="mb-3">👩‍🏫 Manage Student</h5>
       <div class="form-section d-flex flex-wrap gap-2 mb-3">
         <input id="faculty-name" type="text" class="form-control" placeholder="Student Name">
-        <input id="faculty-email" type="email" class="form-control" placeholder="Roll No">
+        <input id="faculty-email" type="number" class="form-control" placeholder="Roll No">
         <button id="addFacultyBtn" class="btn btn-success">
           <i class="bi bi-plus-circle-dotted me-1"></i> Add Student
         </button>
@@ -208,14 +208,11 @@
 
     document.getElementById("addFacultyBtn").addEventListener("click", () => {
       const name = document.getElementById("faculty-name").value.trim();
-      const email = document.getElementById("faculty-email").value.trim();
-      if (!name || !email) return alert("All fields are required.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Enter valid email.");
-      facultyList.push({ name, email, status: "present" });
+      if (!name || !email) return alert("All fields are required.")
+      facultyList.push({ name, Number, status: "present" });
       saveToStorage("faculty", facultyList);
       renderFaculty();
       document.getElementById("faculty-name").value = "";
-      document.getElementById("faculty-email").value = "";
     });
 
     facultySearch.addEventListener("input", renderFaculty);
