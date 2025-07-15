@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduAttend - Faculty Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <style>
+    :root {
+      --lavender: #f5f3ff;
+      --dark-purple: #4b0082;
+      --glass-bg: rgba(255, 255, 255, 0.2);
+      --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: var(--lavender);
+      margin: 0;
+      transition: 0.3s;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      background: var(--dark-purple);
+      color: white;
+      padding: 1rem;
+      z-index: 1000;
+    }
+        .sidebar a {
+      display: block;
+      margin: 1rem 0;
+      color: #fff;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      color: #ffc;
+    }
+    .main {
+      margin-left: 250px;
+      padding: 1rem;
+    }
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass-bg);
+      padding: 1rem 2rem;
+      border-radius: 15px;
+      box-shadow: var(--shadow);
+    }
+    .section-content {
+      background: white;
+      padding: 1.5rem;
+      margin-top: 2rem;
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+    }
+    .form-section input {
+      margin-bottom: 0.5rem;
+    }
+    .toggle-btn {
+      display: none;
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 1100;
+      background: #4b0082;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 5px;
+    }
+    @media (max-width: 768px) {
+      .sidebar {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        display: none;
+      }
+      .main {
+        margin-left: 0;
+        padding-top: 70px;
+      }
+      .toggle-btn {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <button class="toggle-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i> Menu</button>
+
+  <div class="sidebar" id="sidebar">
+    <h4 class="text-center"><i class="bi bi-person-video2 bounce"></i> EduAttend</h4>
+    <a href="Dashboard-home.html"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+    <a href="#"><i class="bi bi-people-fill"></i> Manage Students</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h4>👨‍🏫 Student Management</h4>
+      <span id="clock"></span>
+    </div>
+
+    <div id="faculty" class="section-content">
+      <h5 class="mb-3">👩‍🏫 Manage Student</h5>
+      <div class="form-section d-flex flex-wrap gap-2 mb-3">
+        <input id="faculty-name" type="text" class="form-control" placeholder="Student Name">
+        <input id="faculty-email" type="email" class="form-control" placeholder="Roll No">
+        <button id="addFacultyBtn" class="btn btn-success">
+          <i class="bi bi-plus-circle-dotted me-1"></i> Add Student
+        </button>
+      </div>
+
+      <input id="facultySearch" type="text" class="form-control mb-2" placeholder="🔍 Search name or Roll No">
+
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="table-dark">
+            <tr><th>Name</th><th>Roll No</th><th>Attendance</th><th>Actions</th></tr>
+          </thead>
+          <tbody id="faculty-table"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    AOS.init();
+    document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+    setInterval(() => {
+      document.getElementById("clock").textContent = new Date().toLocaleTimeString();
+    }, 1000);
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function saveToStorage(key, data) {
+      localStorage.setItem(key, JSON.stringify(data));
+    }
+    function loadFromStorage(key) {
+      return JSON.parse(localStorage.getItem(key) || "[]");
+    }
+
+    const facultyTable = document.getElementById("faculty-table");
+    const facultySearch = document.getElementById("facultySearch");
+    let facultyList = loadFromStorage("faculty");
+
+    function renderFaculty() {
+      facultyTable.innerHTML = "";
+      let filtered = facultyList.filter(f => {
+        const term = facultySearch.value.toLowerCase();
+        return f.name.toLowerCase().includes(term) || f.email.toLowerCase().includes(term);
+      });
+      filtered.forEach((fac, i) => {
+        const row = document.createElement("tr");
+        row.setAttribute("data-aos", "fade-up");
+        row.innerHTML = `
+          <td><input type="text" class="form-control" value="${fac.name}" onchange="updateName(${i}, this.value)"></td>
+          <td><input type="email" class="form-control" value="${fac.email}" onchange="updateEmail(${i}, this.value)"></td>
+          <td>
+            <select class="form-select" onchange="updateAttendance(${i}, this.value)">
+              <option value="present" ${fac.status === 'present' ? 'selected' : ''}>Present</option>
+              <option value="absent" ${fac.status === 'absent' ? 'selected' : ''}>Absent</option>
+            </select>
+          </td>
+          <td><button class='btn btn-sm btn-danger' onclick='deleteFaculty(${i})'>
+            <i class="bi bi-trash-fill me-1"></i> Delete
+          </button></td>
+        `;
+        facultyTable.appendChild(row);
+      });
+      AOS.refresh();
+      updateLiveDashboard();
+    }
+
+    function updateName(index, value) {
+      facultyList[index].name = value;
+      saveToStorage("faculty", facultyList);
+    }
+    function updateEmail(index, value) {
+      facultyList[index].email = value;
+      saveToStorage("faculty", facultyList);
+    }
+    function updateAttendance(index, status) {
+      facultyList[index].status = status;
+      saveToStorage("faculty", facultyList);
+      updateLiveDashboard();
+    }
+
+    function deleteFaculty(index) {
+      if (confirm("Are you sure you want to delete this faculty?")) {
+        facultyList.splice(index, 1);
+        saveToStorage("faculty", facultyList);
+        renderFaculty();
+      }
+    }
+
+    document.getElementById("addFacultyBtn").addEventListener("click", () => {
+      const name = document.getElementById("faculty-name").value.trim();
+      const email = document.getElementById("faculty-email").value.trim();
+      if (!name || !email) return alert("All fields are required.");
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Enter valid email.");
+      facultyList.push({ name, email, status: "present" });
+      saveToStorage("faculty", facultyList);
+      renderFaculty();
+      document.getElementById("faculty-name").value = "";
+      document.getElementById("faculty-email").value = "";
+    });
+
+    facultySearch.addEventListener("input", renderFaculty);
+
+    function updateLiveDashboard() {
+      const total = facultyList.length;
+      const present = facultyList.filter(f => f.status === "present").length;
+      const absent = total - present;
+      localStorage.setItem("facultyStats", JSON.stringify({ total, present, absent }));
+    }
+
+    renderFaculty();
+  </script>
+</body>
+</html>

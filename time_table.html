@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Department Timetable</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to right, #fdfbfb, #ebedee);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .sidebar {
+      width: 250px;
+      min-height: 100vh;
+      background: #4b0082;
+      color: white;
+      padding: 1rem;
+      position: fixed;
+    }
+
+    .sidebar h4 {
+      margin-bottom: 2rem;
+    }
+
+    .sidebar a {
+      display: block;
+      color: white;
+      margin-bottom: 1rem;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .sidebar a:hover {
+      color: #ffc107;
+    }
+
+    .main-content {
+      margin-left: 250px;
+      padding: 2rem;
+    }
+
+    h2 {
+      margin-top: 2rem;
+      color: #4b0082;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .tab-content {
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    table {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+
+    thead {
+      background: #4b0082;
+      color: white;
+    }
+
+    td, th {
+      text-align: center;
+      padding: 0.5rem;
+    }
+
+    .nav-tabs .nav-link.active {
+      background-color: #4b0082 !important;
+      color: white !important;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        position: relative;
+        min-height: auto;
+      }
+
+      .main-content {
+        margin-left: 0;
+        padding: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h4>EduAttend</h4>
+    <a href="Dashboard-home.html">🏠 Dashboard</a>
+    <a href="#">📚 Timetable</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <h2>📚 Department Wise Timetable (Mon-Sat)</h2>
+
+    <ul class="nav nav-tabs" id="yearTabs">
+      <li class="nav-item"><a class="nav-link active" data-bs-toggle="tab" href="#first">1st Year</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#second">2nd Year</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#third">3rd Year</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-toggle="tab" href="#final">Final Year</a></li>
+    </ul>
+
+    <div class="tab-content mt-3">
+      <div class="tab-pane fade show active" id="first">
+      <h4 class="text-center text-primary">🧱 CSE - 1st Year</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>1-2</th><th>2-3</th><th>3-4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>Math</td><td>Eng</td><td>Phy</td><td colspan="3">Lab</td></tr>
+          <tr><td>Tue</td><td>Math</td><td>C Lang</td><td>Phy</td><td>Eng</td><td>Free</td><td>Sports</td></tr>
+          <tr><td>Wed</td><td colspan="3">Workshop</td><td>C Lang</td><td>Math</td><td>Phy</td></tr>
+          <tr><td>Thu</td><td>Math</td><td>Eng</td><td>Free</td><td>Library</td><td>Eng</td><td>Phy</td></tr>
+          <tr><td>Fri</td><td>Math</td><td>Eng</td><td>Phy</td><td>C Lang</td><td>Sports</td><td>Library</td></tr>
+          <tr><td>Sat</td><td colspan="6">Seminar & Guest Lecture</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane fade" id="second">
+      <h4 class="text-center text-success">🔧 ECE - 2nd Year</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>1-2</th><th>2-3</th><th>3-4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>Math</td><td>DS</td><td>Digital</td><td colspan="3">Lab</td></tr>
+          <tr><td>Tue</td><td>DS</td><td>DE</td><td>Free</td><td>Lab</td><td>Math</td><td>PE</td></tr>
+          <tr><td>Wed</td><td>Eng</td><td>DE</td><td>Math</td><td colspan="3">Project</td></tr>
+          <tr><td>Thu</td><td>DS</td><td>DE</td><td>Digital</td><td>Library</td><td>Eng</td><td>Sports</td></tr>
+          <tr><td>Fri</td><td colspan="6">Industrial Visit</td></tr>
+          <tr><td>Sat</td><td>Free</td><td>DE</td><td>Quiz</td><td>Lab</td><td>Math</td><td>Seminar</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane fade" id="third">
+      <h4 class="text-center text-warning">🖥️ IT - 3rd Year</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>1-2</th><th>2-3</th><th>3-4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>CN</td><td>AI</td><td>DBMS</td><td colspan="3">Mini Project</td></tr>
+          <tr><td>Tue</td><td>AI</td><td>DBMS</td><td>PE</td><td>Library</td><td>CN</td><td>Seminar</td></tr>
+          <tr><td>Wed</td><td colspan="3">Hackathon</td><td>DBMS</td><td>CN</td><td>AI</td></tr>
+          <tr><td>Thu</td><td>DBMS</td><td>CN</td><td>AI</td><td colspan="3">Lab</td></tr>
+          <tr><td>Fri</td><td>AI</td><td>CN</td><td>Library</td><td>Sports</td><td>DBMS</td><td>Quiz</td></tr>
+          <tr><td>Sat</td><td colspan="6">Career Workshop</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-pane fade" id="final">
+      <h4 class="text-center text-danger">👨‍💼 EEE - Final Year</h4>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Day</th><th>9-10</th><th>10-11</th><th>11-12</th><th>1-2</th><th>2-3</th><th>3-4</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Mon</td><td>PE</td><td>AI</td><td>VLSI</td><td>Lab</td><td>Seminar</td><td>Library</td></tr>
+          <tr><td>Tue</td><td>AI</td><td>VLSI</td><td>Lab</td><td colspan="3">Internship Training</td></tr>
+          <tr><td>Wed</td><td>Project</td><td>PE</td><td>VLSI</td><td>AI</td><td>Library</td><td>Discussion</td></tr>
+          <tr><td>Thu</td><td colspan="3">Major Project Review</td><td>Free</td><td>VLSI</td><td>AI</td></tr>
+          <tr><td>Fri</td><td>Free</td><td>PE</td><td>AI</td><td>Workshop</td><td>Sports</td><td>Career Prep</td></tr>
+          <tr><td>Sat</td><td colspan="6">Mock Interviews & GD</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

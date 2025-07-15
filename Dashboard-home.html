@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduAttend Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+ <link rel="stylesheet" href="dashboard_home.css">
+</head>
+
+<body>
+
+
+  <div class="sidebar">
+    <h3>EduAttend</h3>
+ <option value="admin">Admin</option>
+
+    </select>
+    <div id="adminMenu">
+      <a onclick="showSection('dashboard')">🏠 Dashboard</a>
+         <a href="Student_Manage.html">👨‍🎓 Manage Students</a>
+      <a href="Faulty_Manage.html">👩‍🏫 Manage Faculty</a>
+      <a onclick="showSection('attendance')">📅 Attendance Overview</a>
+      <a href="time_table.html">📘 Class Schedules</a>
+      <a href="report.html">📈 Reports</a>
+      <a onclick="downloadReport()">⬇️ Download Reports</a>
+      <a href="settings.html">⚙️ Settings</a>
+      <a href="help&support.html">💬 Help & Support</a>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="header">
+
+      <h4>EduAttend Dashboard</h4>
+      <div class="profile-section">
+        <span id="clock"></span>
+        <i class="bi bi-bell"></i>
+        <i class="bi bi-brightness-high toggle-dark" onclick="toggleDarkMode()"></i>
+        <i class="bi bi-person-circle"></i>
+      </div>
+    </div>
+
+  <div id="dashboard" class="section-content" style="display:block">
+  <div class="kpi-cards">
+    <div class="card-box" data-aos="fade-up">
+      <h6>Total Students</h6>
+      <h3>105</h3>
+    </div>
+    <div class="card-box" data-aos="fade-up">
+      <h6>Present Today</h6>
+      <h3>98</h3>
+    </div>
+       <div class="card-box" data-aos="fade-up">
+      <h6>Absent Today</h6>
+      <h3>98</h3>
+    </div>
+    
+    <div class="card-box" data-aos="fade-up">
+      <h6>Student Attendance %</h6>
+      <h3>93.3%</h3>
+    </div>
+    <div class="card-box" data-aos="fade-up">
+      <h6>Faculty Count</h6>
+      <h3>12</h3>
+    </div>
+     <div class="card-box" data-aos="fade-up">
+      <h6>Faculty Present</h6>
+      <h3>12</h3>
+    </div>
+     <div class="card-box" data-aos="fade-up">
+      <h6>Faculty Absent</h6>
+      <h3>12</h3>
+    </div>
+     <div class="card-box" data-aos="fade-up">
+      <h6>Faculty Attendance %</h6>
+      <h3>12</h3>
+    </div>
+  </div>
+
+<div class="row mt-4">
+  <div class="col-md-6">
+    <div class="card-box">
+      <h6 class="text-center">📊 Student Attendance Overview (Bar)</h6>
+      <canvas id="studentBarChart" height="200"></canvas>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card-box">
+      <h6 class="text-center">🥧 Faculty Attendance Overview (Pie)</h6>
+      <canvas id="facultyPieChart" height="200"></canvas>
+    </div>
+  </div>
+
+  <div class="card-box mt-4" data-aos="fade-up">
+  <h6 class="text-center mb-3">🏫 Class-wise Attendance</h6>
+  <canvas id="classWiseChart" height="200"></canvas>
+</div>
+<div class="card-box mt-4" data-aos="fade-up">
+  <h6 class="text-center mb-3">🎓 Year-wise Attendance Summary</h6>
+  <canvas id="yearChart" height="200"></canvas>
+</div>
+<div class="card-box mt-4" data-aos="fade-up">
+  <h6 class="text-center mb-3">🧱 Dept-Year-wise Attendance (Stacked)</h6>
+  <canvas id="stackedChart" height="260"></canvas>
+</div>
+
+</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div id="attendance" class="section-content">
+      <h5>Attendance Overview</h5>
+      <canvas id="overviewChart"></canvas>
+    </div>
+    <div id="reports" class="section-content">
+      <h5>Report Visualization</h5>
+      <canvas id="reportChart"></canvas>
+    </div>
+
+    <div id="settings" class="section-content">
+      <h5>Settings</h5>
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="darkModeSwitch" onchange="toggleDarkMode()">
+        <label class="form-check-label" for="darkModeSwitch">Dark Mode</label>
+      </div>
+    </div>
+
+    <div id="help" class="section-content">
+      <h5>Help & Support</h5>
+      <p>If you have any issues, contact <a href="mailto:support@eduattend.com">support@eduattend.com</a></p>
+    </div>
+  </div>
+
+</body>
+<script src="Dashboard_Home.js"></script>
+</html>
