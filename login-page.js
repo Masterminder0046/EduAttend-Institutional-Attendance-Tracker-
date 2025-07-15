@@ -84,7 +84,7 @@
     setTimeout(() => {
       loginLoader.style.display = "none";
       localStorage.setItem("loggedInUser", email);
-      if (user.role === "admin") window.location.href = "dashboard.html";
+      if (user.role === "admin") window.location.href = "Dashboard-home.html";
       else if (user.role === "faculty") window.location.href = "attendance.html";
       else window.location.href = "form.html";
     }, 1500);
