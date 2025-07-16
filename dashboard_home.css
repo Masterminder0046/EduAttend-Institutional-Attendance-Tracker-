@@ -36,7 +36,7 @@
       cursor: pointer;
     }
     .sidebar a:hover {
-      color: var(--lavender);
+      color: #ffc107;
     }
     .main {
       margin-left: 0;
