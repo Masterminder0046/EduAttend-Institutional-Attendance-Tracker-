@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EduAttend - Student Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    :root {
+      --purple: #4b0082;
+      --bg: #f3f0ff;
+      --glass: rgba(255, 255, 255, 0.2);
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      margin: 0;
+    }
+    .sidebar {
+      width: 250px;
+      height: 100vh;
+      position: fixed;
+      background: var(--purple);
+      color: #fff;
+      padding: 1rem;
+      transition: all 0.3s;
+    }
+    .sidebar a {
+      display: block;
+      margin: 1rem 0;
+      color: #fff;
+      text-decoration: none;
+    }
+    .sidebar a:hover {
+      color: #ffc;
+    }
+    .main {
+      margin-left: 250px;
+      padding: 1rem;
+      transition: all 0.3s;
+    }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .section-content {
+      margin-top: 2rem;
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .form-section input {
+      margin-bottom: 0.5rem;
+    }
+
+    .sidebar-toggle {
+      display: none;
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      font-size: 24px;
+      color: #4b0082;
+      background: white;
+      padding: 5px 10px;
+      border-radius: 8px;
+      z-index: 1001;
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+        z-index: 1000;
+      }
+      .sidebar.active {
+        transform: translateX(0);
+      }
+      .main {
+        margin-left: 0;
+      }
+      .sidebar-toggle {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar-toggle" onclick="toggleSidebar()">
+    <i class="bi bi-list"></i>
+  </div>
+
+  <div class="sidebar" id="sidebar">
+    <h4 class="text-center"><i class="bi bi-person-video2 bounce"></i> EduAttend</h4>
+    <a href="Dashboard-home.html"><i class="bi bi-house-door-fill"></i> Dashboard</a>
+    <a href="#"><i class="bi bi-people-fill"></i> Manage Students</a>
+  </div>
+
+  <div class="main">
+    <div class="header">
+      <h4>🎓 Student Management</h4>
+      <span id="clock" class="fw-bold"></span>
+    </div>
+
+    <div class="section-content">
+      <div class="form-section d-flex flex-wrap gap-2">
+        <input id="student-name" type="text" class="form-control" placeholder="Student Name" />
+        <input id="student-roll" type="text" class="form-control" placeholder="Roll No" />
+        <button class="btn btn-primary" onclick="addStudent()">
+          <i class="bi bi-person-plus-fill spin"></i> Add
+        </button>
+      </div>
+      <input type="text" class="form-control my-2" id="searchStudent" placeholder="🔍 Search by name or roll" />
+      <table class="table table-bordered">
+        <thead class="table-dark">
+          <tr><th>Name</th><th>Roll No</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="student-table"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const clock = document.getElementById("clock");
+    setInterval(() => {
+      clock.textContent = new Date().toLocaleTimeString();
+    }, 1000);
+
+    let students = JSON.parse(localStorage.getItem("students") || "[]");
+
+    function save() {
+      localStorage.setItem("students", JSON.stringify(students));
+    }
+
+    function renderStudents() {
+      const table = document.getElementById("student-table");
+      const term = document.getElementById("searchStudent").value.toLowerCase();
+      table.innerHTML = "";
+      students.filter(s => s.name.toLowerCase().includes(term) || s.roll.toLowerCase().includes(term))
+        .forEach((stu, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td><input type="text" class="form-control" value="${stu.name}" onchange="updateName(${i}, this.value)"></td>
+          <td><input type="text" class="form-control" value="${stu.roll}" onchange="updateRoll(${i}, this.value)"></td>
+          <td>
+            <select class="form-select" onchange="updateStatus(${i}, this.value)">
+              <option value="present" ${stu.status === "present" ? "selected" : ""}>Present</option>
+              <option value="absent" ${stu.status === "absent" ? "selected" : ""}>Absent</option>
+            </select>
+          </td>
+          <td><button class="btn btn-danger btn-sm" onclick="deleteStudent(${i})"><i class="bi bi-trash-fill"></i></button></td>
+        `;
+        table.appendChild(row);
+      });
+    }
+
+    function updateName(i, value) {
+      students[i].name = value;
+      save(); renderStudents();
+    }
+    function updateRoll(i, value) {
+      students[i].roll = value;
+      save(); renderStudents();
+    }
+    function updateStatus(i, value) {
+      students[i].status = value;
+      save(); renderStudents();
+    }
+
+    function deleteStudent(i) {
+      if (confirm("Delete this student?")) {
+        students.splice(i, 1);
+        save(); renderStudents();
+      }
+    }
+
+    function addStudent() {
+      const name = document.getElementById("student-name").value.trim();
+      const roll = document.getElementById("student-roll").value.trim();
+      if (!name || !roll) return alert("Fill all fields");
+      students.push({ name, roll, status: "present" });
+      save();
+      document.getElementById("student-name").value = "";
+      document.getElementById("student-roll").value = "";
+      renderStudents();
+    }
+
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("active");
+    }
+
+    document.getElementById("searchStudent").addEventListener("input", renderStudents);
+    renderStudents();
+  </script>
+</body>
+</html>

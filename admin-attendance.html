@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - Attendance Summary</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    body {
+      background: #f4f4ff;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 1rem;
+    }
+    .filter-bar {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .card {
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+    }
+    canvas {
+      max-height: 300px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3 class="text-center text-primary mb-4">📊 Admin Attendance Summary</h3>
+
+    <!-- Filter Bar -->
+    <div class="filter-bar">
+      <select id="filter-dept" class="form-select">
+        <option value="">All Departments</option>
+        <option value="CSE">CSE</option>
+        <option value="ECE">ECE</option>
+        <option value="EEE">EEE</option>
+        <option value="MECH">MECH</option>
+      </select>
+      <select id="filter-year" class="form-select">
+        <option value="">All Years</option>
+        <option value="1st">1st Year</option>
+        <option value="2nd">2nd Year</option>
+        <option value="3rd">3rd Year</option>
+        <option value="Final">Final Year</option>
+      </select>
+      <input type="date" id="filter-date" class="form-control"/>
+      <button class="btn btn-primary" onclick="applyFilters()">🔍 Apply</button>
+      <button class="btn btn-success" onclick="downloadCSV()">⬇️ Export CSV</button>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-cards">
+      <div class="card p-3">
+        <h6>Total Marked</h6>
+        <h4 id="total-marked">0</h4>
+      </div>
+      <div class="card p-3">
+        <h6>Present</h6>
+        <h4 id="present-count">0</h4>
+      </div>
+      <div class="card p-3">
+        <h6>Absent</h6>
+        <h4 id="absent-count">0</h4>
+      </div>
+    </div>
+
+    <!-- Graphs -->
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h6 class="text-center">📅 Date-wise Attendance</h6>
+          <canvas id="dateChart"></canvas>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h6 class="text-center">🏫 Department-wise Attendance</h6>
+          <canvas id="deptChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let summaryData = JSON.parse(localStorage.getItem('attendanceRecords')) || [];
+
+    function applyFilters() {
+      const dept = document.getElementById('filter-dept').value;
+      const year = document.getElementById('filter-year').value;
+      const date = document.getElementById('filter-date').value;
+
+      let filtered = summaryData.filter(entry => {
+        return (!dept || entry.department === dept)
+            && (!year || entry.year === year)
+            && (!date || entry.date === date);
+      });
+
+      let total = filtered.length;
+      let present = filtered.filter(f => f.status === 'present').length;
+      let absent = total - present;
+
+      document.getElementById('total-marked').textContent = total;
+      document.getElementById('present-count').textContent = present;
+      document.getElementById('absent-count').textContent = absent;
+
+      updateCharts(filtered);
+    }
+
+    function updateCharts(data) {
+      const deptStats = {};
+      const dateStats = {};
+      data.forEach(d => {
+        deptStats[d.department] = (deptStats[d.department] || 0) + (d.status === 'present' ? 1 : 0);
+        dateStats[d.date] = (dateStats[d.date] || 0) + (d.status === 'present' ? 1 : 0);
+      });
+
+      const deptChart = new Chart(document.getElementById('deptChart'), {
+        type: 'bar',
+        data: {
+          labels: Object.keys(deptStats),
+          datasets: [{
+            label: 'Present Count',
+            data: Object.values(deptStats),
+            backgroundColor: '#4b0082'
+          }]
+        },
+        options: { responsive: true, plugins: { legend: { display: false } } }
+      });
+
+      const dateChart = new Chart(document.getElementById('dateChart'), {
+        type: 'line',
+        data: {
+          labels: Object.keys(dateStats),
+          datasets: [{
+            label: 'Present Over Time',
+            data: Object.values(dateStats),
+            borderColor: '#36A2EB',
+            tension: 0.4
+          }]
+        },
+        options: { responsive: true }
+      });
+    }
+
+    function downloadCSV() {
+      const rows = [['Department', 'Year', 'Name', 'Status', 'Date']];
+      summaryData.forEach(d => rows.push([d.department, d.year, d.name, d.status, d.date]));
+      const csv = rows.map(e => e.join(",")).join("\n");
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'attendance_summary.csv';
+      link.click();
+    }
+
+    applyFilters();
+  </script>
+</body>
+</html>

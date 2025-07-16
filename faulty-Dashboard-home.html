@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Faculty - Mark Attendance</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: #f2f2ff;
+      font-family: 'Inter', sans-serif;
+    }
+    .container {
+      max-width: 1000px;
+    }
+    .card {
+      border-radius: 16px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
+    .form-select, .form-control {
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container py-4">
+    <div class="mb-4 text-center">
+      <h3 class="text-primary">✅ Mark Attendance - Faculty View</h3>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4">
+        <select id="departmentSelect" class="form-select">
+          <option value="">Select Department</option>
+          <option value="CSE">CSE</option>
+          <option value="ECE">ECE</option>
+          <option value="EEE">EEE</option>
+          <option value="MECH">MECH</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <select id="yearSelect" class="form-select">
+          <option value="">Select Year</option>
+          <option value="1st">1st Year</option>
+          <option value="2nd">2nd Year</option>
+          <option value="3rd">3rd Year</option>
+          <option value="Final">Final Year</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <button onclick="loadStudents()" class="btn btn-success w-100">🎓 Load Students</button>
+      </div>
+    </div>
+
+    <div class="card p-3" id="attendanceSection" style="display:none;">
+      <h5 class="text-center mb-3">📝 Mark Attendance</h5>
+      <form id="attendanceForm">
+        <div id="studentsList" class="row g-2 mb-3"></div>
+        <button type="submit" class="btn btn-primary">✅ Submit Attendance</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const mockStudentData = {
+      "CSE": {
+        "1st": ["Arun", "Keerthi", "Sathya"],
+        "2nd": ["Jeni", "Vikram", "Abi"],
+        "3rd": ["Rahul", "Divya", "Aravind"],
+        "Final": ["Siva", "Anu", "Nirmal"]
+      },
+      "ECE": {
+        "1st": ["Priya", "Hari", "Santhosh"],
+        "2nd": ["Lakshmi", "Praveen", "Nila"]
+      }
+    };
+
+    function loadStudents() {
+      const dept = document.getElementById("departmentSelect").value;
+      const year = document.getElementById("yearSelect").value;
+      if (!dept || !year) return alert("Please select both Department and Year.");
+
+      const students = mockStudentData[dept]?.[year] || [];
+      const listDiv = document.getElementById("studentsList");
+      listDiv.innerHTML = "";
+
+      students.forEach(name => {
+        const div = document.createElement("div");
+        div.className = "col-12 col-md-4";
+        div.innerHTML = `
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="${name}" id="${name}" checked>
+            <label class="form-check-label" for="${name}">${name}</label>
+          </div>
+        `;
+        listDiv.appendChild(div);
+      });
+
+      document.getElementById("attendanceSection").style.display = "block";
+    }
+
+    document.getElementById("attendanceForm").addEventListener("submit", e => {
+      e.preventDefault();
+
+      const dept = document.getElementById("departmentSelect").value;
+      const year = document.getElementById("yearSelect").value;
+      const date = new Date().toISOString().split('T')[0];
+      const students = document.querySelectorAll("#studentsList input");
+
+      const records = Array.from(students).map(input => ({
+        name: input.name,
+        status: input.checked ? "present" : "absent"
+      }));
+
+      const entry = { date, department: dept, year, records };
+      let allData = JSON.parse(localStorage.getItem("attendanceRecords") || "[]");
+      allData.push(entry);
+      localStorage.setItem("attendanceRecords", JSON.stringify(allData));
+
+      alert("✅ Attendance submitted successfully!");
+      document.getElementById("attendanceForm").reset();
+      document.getElementById("attendanceSection").style.display = "none";
+    });
+  </script>
+</body>
+</html>
