@@ -84,7 +84,7 @@
     setTimeout(() => {
       loginLoader.style.display = "none";
       localStorage.setItem("loggedInUser", email);
-      if (user.role === "admin") window.location.href = "Dashboard-home.html";
+      if (user.role === "admin") window.location.href = "https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/Dashboard-home.html";
       else if (user.role === "faculty") window.location.href = "attendance.html";
       else window.location.href = "form.html";
     }, 1500);

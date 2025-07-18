@@ -1,202 +1,366 @@
+<!-- student-management.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>EduAttend - Student Management</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <style>
-    :root {
-      --purple: #4b0082;
-      --bg: #f3f0ff;
-      --glass: rgba(255, 255, 255, 0.2);
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      margin: 0;
-    }
-    .sidebar {
-      width: 250px;
-      height: 100vh;
-      position: fixed;
-      background: var(--purple);
-      color: #fff;
-      padding: 1rem;
-      transition: all 0.3s;
-    }
-    .sidebar a {
-      display: block;
-      margin: 1rem 0;
-      color: #fff;
-      text-decoration: none;
-    }
-    .sidebar a:hover {
-      color: #ffc;
-    }
-    .main {
-      margin-left: 250px;
-      padding: 1rem;
-      transition: all 0.3s;
-    }
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      border-radius: 10px;
-      padding: 1rem 2rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    .section-content {
-      margin-top: 2rem;
-      background: white;
-      border-radius: 12px;
-      padding: 1.5rem;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-    .form-section input {
-      margin-bottom: 0.5rem;
-    }
-
-    .sidebar-toggle {
-      display: none;
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      font-size: 24px;
-      color: #4b0082;
-      background: white;
-      padding: 5px 10px;
-      border-radius: 8px;
-      z-index: 1001;
-    }
-
-    @media (max-width: 768px) {
-      .sidebar {
-        transform: translateX(-100%);
-        z-index: 1000;
-      }
-      .sidebar.active {
-        transform: translateX(0);
-      }
-      .main {
-        margin-left: 0;
-      }
-      .sidebar-toggle {
-        display: block;
-      }
-    }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Management</title>
+ 
 </head>
+<style>
+  body {
+  margin: 0;
+  display: flex;
+  background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+}
+ * {
+      font-family: 'Inter', sans-serif;
+    }
+.sidebar {
+  width: 220px;
+  height: 100vh;
+  background-color:#4b0082;
+  padding: 20px;
+  color: white;
+  position: fixed;
+}
+
+.sidebar h2 {
+  margin-bottom: 30px;
+  font-size: 1.5rem;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  margin: 15px 0;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  font-weight: normal;
+  transition: 0.3s;
+ color: white;
+    display: block;
+    padding: 0.5rem;
+    
+}
+
+.sidebar a:hover {
+  color: #ffa502;
+}
+       .sidebar a.active,
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0.55rem;
+    }
+
+.main {
+  margin-left: 240px;
+  padding: 30px;
+  width: 100%;
+}
+
+h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.form-container,
+.list-container {
+  background: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+input {
+  padding: 10px;
+  margin: 10px 10px 10px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+button {
+  padding: 10px 20px;
+  margin: 10px 5px;
+  background: #5913db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+button:hover {
+  background: #0c116b;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 12px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #4b0082;
+  color: white;
+}
+
+#pagination {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#pagination button {
+  padding: 5px 10px;
+  margin: 5px;
+  background: #ffa502;
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+#pagination button.active {
+  background: #ff6b81;
+}
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 999;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 300px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.modal-actions button {
+  margin: 0 10px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+}
+
+</style>
 <body>
-  <div class="sidebar-toggle" onclick="toggleSidebar()">
-    <i class="bi bi-list"></i>
+  <div class="sidebar">
+    <h2>Dashboard</h2>
+    <a onclick="showSection('dashboard')">🏠 Dashboard</a>
+         <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Student_Manage.html">👨‍🎓 Manage Students</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Faulty_Manage.html">👩‍🏫 Manage Faculty</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/attendance-overiew.html">📅 Attendance Overview</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/time_table.html">📘 Class Schedules</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/report.html">📈 Reports</a>
+      <a onclick="downloadReport()">⬇️ Download Reports</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/settings.html">⚙️ Settings</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/help&support.html">💬 Help & Support</a>
   </div>
-
-  <div class="sidebar" id="sidebar">
-    <h4 class="text-center"><i class="bi bi-person-video2 bounce"></i> EduAttend</h4>
-    <a href="Dashboard-home.html"><i class="bi bi-house-door-fill"></i> Dashboard</a>
-    <a href="#"><i class="bi bi-people-fill"></i> Manage Students</a>
-  </div>
-
   <div class="main">
-    <div class="header">
-      <h4>🎓 Student Management</h4>
-      <span id="clock" class="fw-bold"></span>
+    <h1>Student Management</h1>
+
+    <div class="form-container">
+      <h2>Add / Edit Student</h2>
+      <form id="studentForm">
+        <input type="number" id="rollNo" placeholder="Roll No" required />
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="text" id="class" placeholder="Class" required />
+        <button type="submit">Submit</button>
+        <button type="reset">Clear</button>
+      </form>
     </div>
 
-    <div class="section-content">
-      <div class="form-section d-flex flex-wrap gap-2">
-        <input id="student-name" type="text" class="form-control" placeholder="Student Name" />
-        <input id="student-roll" type="text" class="form-control" placeholder="Roll No" />
-        <button class="btn btn-primary" onclick="addStudent()">
-          <i class="bi bi-person-plus-fill spin"></i> Add
-        </button>
-      </div>
-      <input type="text" class="form-control my-2" id="searchStudent" placeholder="🔍 Search by name or roll" />
-      <table class="table table-bordered">
-        <thead class="table-dark">
-          <tr><th>Name</th><th>Roll No</th><th>Status</th><th>Actions</th></tr>
+    <div class="list-container">
+      <h2>Student List</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Name</th>
+            <th>Class</th>
+            <th>Actions</th>
+          </tr>
         </thead>
-        <tbody id="student-table"></tbody>
+        <tbody id="studentTable"></tbody>
       </table>
+      <div id="pagination"></div>
     </div>
   </div>
 
-  <script>
-    const clock = document.getElementById("clock");
-    setInterval(() => {
-      clock.textContent = new Date().toLocaleTimeString();
-    }, 1000);
+<div id="confirmModal" class="modal">
+  <div class="modal-content">
+    <p>Are you sure you want to delete this student?</p>
+    <div class="modal-actions">
+      <button onclick="confirmDelete()" style="background: #e84118;">Yes, Delete</button>
+      <button onclick="closeModal()" style="background: #2f3640;">Cancel</button>
+    </div>
+  </div>
+</div>
 
-    let students = JSON.parse(localStorage.getItem("students") || "[]");
 
-    function save() {
+  <script>let students = JSON.parse(localStorage.getItem('students')) || [];
+let editIndex = -1;
+let itemsPerPage = 5;
+let currentPage = 1;
+
+const form = document.getElementById('studentForm');
+const tableBody = document.getElementById('studentTable');
+const paginationDiv = document.getElementById('pagination');
+
+form.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const roll = document.getElementById('rollNo').value.trim();
+  const name = document.getElementById('name').value.trim();
+  const clas = document.getElementById('class').value.trim();
+
+  if (!roll || !name || !clas) {
+    alert('Please fill all fields!');
+    return;
+  }
+
+  const newStudent = { roll, name, class: clas };
+
+  if (editIndex === -1) {
+    students.push(newStudent);
+  } else {
+    students[editIndex] = newStudent;
+    editIndex = -1;
+  }
+
+  localStorage.setItem('students', JSON.stringify(students));
+  form.reset();
+  renderTable();
+});
+
+function renderTable() {
+  tableBody.innerHTML = '';
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const pageStudents = students.slice(start, end);
+
+  pageStudents.forEach((stu, i) => {
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${stu.roll}</td>
+      <td>${stu.name}</td>
+      <td>${stu.class}</td>
+      <td>
+        <button onclick=\"editStudent(${start + i})\">Edit</button>
+        <button onclick=\"deleteStudent(${start + i})\" style=\"background:#e84118\">Delete</button>
+      </td>`;
+    tableBody.appendChild(row);
+  });
+
+  renderPagination();
+}
+
+function editStudent(index) {
+  const stu = students[index];
+  document.getElementById('rollNo').value = stu.roll;
+  document.getElementById('name').value = stu.name;
+  document.getElementById('class').value = stu.class;
+  editIndex = index;
+}
+
+ let deleteIndex = -1;
+
+  function deleteStudent(index) {
+    deleteIndex = index;
+    document.getElementById('confirmModal').style.display = 'flex';
+  }
+
+  function confirmDelete() {
+    if (deleteIndex !== -1) {
+      students.splice(deleteIndex, 1);
+      localStorage.setItem('students', JSON.stringify(students));
+      renderTable();
+      closeModal();
+    }
+  }
+
+  function closeModal() {
+    document.getElementById('confirmModal').style.display = 'none';
+    deleteIndex = -1;
+  }
+
+function renderPagination() {
+  paginationDiv.innerHTML = '';
+  const totalPages = Math.ceil(students.length / itemsPerPage);
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+    btn.textContent = i;
+    btn.className = i === currentPage ? 'active' : '';
+    btn.onclick = () => {
+      currentPage = i;
+      renderTable();
+    };
+    paginationDiv.appendChild(btn);
+  }
+}
+
+function exportData() {
+  const blob = new Blob([JSON.stringify(students, null, 2)], {
+    type: 'application/json',
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'students-data.json';
+  a.click();
+}
+ const editRoll = "101"; // change this as needed
+  const student = students.find((s) => s.roll === editRoll);
+
+  if (student) {
+    document.getElementById("editRoll").value = student.roll;
+    document.getElementById("editName").value = student.name;
+    document.getElementById("editClass").value = student.class;
+  }
+
+  document.getElementById("editForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const updatedName = document.getElementById("editName").value.trim();
+    const updatedClass = document.getElementById("editClass").value.trim();
+
+    const index = students.findIndex((s) => s.roll === editRoll);
+    if (index !== -1) {
+      students[index].name = updatedName;
+      students[index].class = updatedClass;
       localStorage.setItem("students", JSON.stringify(students));
+      document.getElementById("message").innerText = "Student updated successfully!";
     }
-
-    function renderStudents() {
-      const table = document.getElementById("student-table");
-      const term = document.getElementById("searchStudent").value.toLowerCase();
-      table.innerHTML = "";
-      students.filter(s => s.name.toLowerCase().includes(term) || s.roll.toLowerCase().includes(term))
-        .forEach((stu, i) => {
-        const row = document.createElement("tr");
-        row.innerHTML = `
-          <td><input type="text" class="form-control" value="${stu.name}" onchange="updateName(${i}, this.value)"></td>
-          <td><input type="text" class="form-control" value="${stu.roll}" onchange="updateRoll(${i}, this.value)"></td>
-          <td>
-            <select class="form-select" onchange="updateStatus(${i}, this.value)">
-              <option value="present" ${stu.status === "present" ? "selected" : ""}>Present</option>
-              <option value="absent" ${stu.status === "absent" ? "selected" : ""}>Absent</option>
-            </select>
-          </td>
-          <td><button class="btn btn-danger btn-sm" onclick="deleteStudent(${i})"><i class="bi bi-trash-fill"></i></button></td>
-        `;
-        table.appendChild(row);
-      });
-    }
-
-    function updateName(i, value) {
-      students[i].name = value;
-      save(); renderStudents();
-    }
-    function updateRoll(i, value) {
-      students[i].roll = value;
-      save(); renderStudents();
-    }
-    function updateStatus(i, value) {
-      students[i].status = value;
-      save(); renderStudents();
-    }
-
-    function deleteStudent(i) {
-      if (confirm("Delete this student?")) {
-        students.splice(i, 1);
-        save(); renderStudents();
-      }
-    }
-
-    function addStudent() {
-      const name = document.getElementById("student-name").value.trim();
-      const roll = document.getElementById("student-roll").value.trim();
-      if (!name || !roll) return alert("Fill all fields");
-      students.push({ name, roll, status: "present" });
-      save();
-      document.getElementById("student-name").value = "";
-      document.getElementById("student-roll").value = "";
-      renderStudents();
-    }
-
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("active");
-    }
-
-    document.getElementById("searchStudent").addEventListener("input", renderStudents);
-    renderStudents();
-  </script>
+  });
+renderTable();
+</script>
 </body>
 </html>

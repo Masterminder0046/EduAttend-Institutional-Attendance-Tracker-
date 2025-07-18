@@ -3,238 +3,244 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>EduAttend - Faculty Management</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <title>Faulty Attendance Manager</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap">
   <style>
-    :root {
-      --lavender: #f5f3ff;
-      --dark-purple: #4b0082;
-      --glass-bg: rgba(255, 255, 255, 0.2);
-      --shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  
     }
+
     * {
       font-family: 'Inter', sans-serif;
     }
     body {
-      background: var(--lavender);
-      margin: 0;
-      transition: 0.3s;
+      display: flex;
+      background: #f0f2f5;
     }
     .sidebar {
       width: 250px;
-      height: 100vh;
-      position: fixed;
-      background: var(--dark-purple);
-      color: white;
-      padding: 1rem;
-      z-index: 1000;
-    }
-        .sidebar a {
-      display: block;
-      margin: 1rem 0;
-      color: #fff;
-      text-decoration: none;
-    }
-    .sidebar a:hover {
-      color: #ffc;
-    }
-    .main {
-      margin-left: 250px;
-      padding: 1rem;
-    }
-    .header {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--glass-bg);
-      padding: 1rem 2rem;
-      border-radius: 15px;
-      box-shadow: var(--shadow);
-    }
-    .section-content {
-      background: white;
-      padding: 1.5rem;
-      margin-top: 2rem;
-      border-radius: 12px;
-      box-shadow: var(--shadow);
-    }
-    .form-section input {
-      margin-bottom: 0.5rem;
-    }
-    .toggle-btn {
-      display: none;
-      position: fixed;
-      top: 15px;
-      left: 15px;
-      z-index: 1100;
       background: #4b0082;
       color: white;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 5px;
+      padding: 20px;
+      min-height: 100vh;
     }
-    @media (max-width: 768px) {
-      .sidebar {
-        position: absolute;
-        width: 100%;
-        height: auto;
-        display: none;
-      }
-      .main {
-        margin-left: 0;
-        padding-top: 70px;
-      }
-      .toggle-btn {
-        display: block;
-      }
+    .sidebar a {
+      display: block;
+      margin: 0.75rem 0;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      color: #ffc107;
+    }
+    .sidebar h2 {
+      margin-bottom: 30px;
+    }
+        .sidebar a.active,
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0.55rem;
+    }
+
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+ .top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.top-bar-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+    .table-container {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    th {
+      background: #4b0082;
+      color: white;
+    }
+    tr:hover {
+      background: #f5f5f5;
+    }
+.btn, .bt {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 5px;
+  background:  #4b0082;
+  color: white;
+  cursor: pointer;
+}
+
+.bt:hover {
+  background:  #4b0082;
+}
+
+    .checkbox {
+      transform: scale(1.2);
+    }
+    .timestamp {
+      font-size: 12px;
+      color: gray;
     }
   </style>
 </head>
 <body>
-  <button class="toggle-btn" onclick="toggleSidebar()"><i class="bi bi-list"></i> Menu</button>
-
-  <div class="sidebar" id="sidebar">
-    <h4 class="text-center"><i class="bi bi-person-video2 bounce"></i> EduAttend</h4>
-    <a href="Dashboard-home.html">🏠 Dashboard</a>
+  <div class="sidebar">
+    <h2>EduAttend</h2>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/Dashboard-home.html">🏠 Dashboard</a>
          <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Student_Manage.html">👨‍🎓 Manage Students</a>
       <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Faulty_Manage.html">👩‍🏫 Manage Faculty</a>
-      <a href="attendance-overiew.html">📅 Attendance Overview</a>
-      <a href="time_table.html">📘 Class Schedules</a>
-      <a href="report.html">📈 Reports</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/attendance-overiew.html">📅 Attendance Overview</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/time_table.html">📘 Class Schedules</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/report.html">📈 Reports</a>
       <a onclick="downloadReport()">⬇️ Download Reports</a>
-      <a href="settings.html">⚙️ Settings</a>
-      <a href="help&support.html">💬 Help & Support</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/settings.html">⚙️ Settings</a>
+      <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/dashboard/help&support.html">💬 Help & Support</a>
   </div>
-
   <div class="main">
-    <div class="header">
-      <h4>👨‍🏫 Faculty Management</h4>
-      <span id="clock"></span>
-    </div>
+  <div class="top-bar">
+  <h1>Faculty Attendance</h1>
+  <div class="top-bar-buttons">
+    <button class="btn" onclick="exportToCSV()">Export Data</button> 
+    <button class="bt" onclick="openAddPopup()">+ Add Faculty</button>
+  </div>
+</div>
 
-    <div id="faculty" class="section-content">
-      <h5 class="mb-3">👩‍🏫 Manage Faculty</h5>
-      <div class="form-section d-flex flex-wrap gap-2 mb-3">
-        <input id="faculty-name" type="text" class="form-control" placeholder="Faculty Name">
-        <input id="faculty-email" type="email" class="form-control" placeholder="Email">
-        <button id="addFacultyBtn" class="btn btn-success">
-          <i class="bi bi-plus-circle-dotted me-1"></i> Add Faculty
-        </button>
-      </div>
 
-      <input id="facultySearch" type="text" class="form-control mb-2" placeholder="🔍 Search name or email">
-
-      <div class="table-responsive">
-        <table class="table table-bordered">
-          <thead class="table-dark">
-            <tr><th>Name</th><th>Email</th><th>Attendance</th><th>Actions</th></tr>
-          </thead>
-          <tbody id="faculty-table"></tbody>
-        </table>
-      </div>
+    <div class="table-container">
+      <table id="attendanceTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Department</th>
+            <th>Mark Present</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody id="facultyBody"></tbody>
+      </table>
     </div>
   </div>
+  <!-- Add Faculty Button -->
+
+
+<!-- Add Faculty Modal -->
+<div id="popupOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div style="background:white; padding:20px; border-radius:10px; width:300px; box-shadow:0 0 20px rgba(0,0,0,0.3);">
+    <h3>Add Faculty</h3>
+    <input type="text" id="facultyName" placeholder="Name" style="width:100%; padding:10px; margin:10px 0;" />
+    <input type="text" id="facultyDept" placeholder="Department" style="width:100%; padding:10px; margin:10px 0;" />
+    <button class="btn" onclick="addFaculty()">Add</button>
+    <button class="btn" style="background:#ccc; color:#333;" onclick="closeAddPopup()">Cancel</button>
+  </div>
+</div>
+
 
   <script>
-    AOS.init();
-    document.getElementById("clock").textContent = new Date().toLocaleTimeString();
-    setInterval(() => {
-      document.getElementById("clock").textContent = new Date().toLocaleTimeString();
-    }, 1000);
+    function openAddPopup() {
+  document.getElementById("popupOverlay").style.display = "flex";
+}
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.style.display = sidebar.style.display === 'block' ? 'none' : 'block';
-    }
+function closeAddPopup() {
+  document.getElementById("popupOverlay").style.display = "none";
+}
 
-    function saveToStorage(key, data) {
-      localStorage.setItem(key, JSON.stringify(data));
-    }
-    function loadFromStorage(key) {
-      return JSON.parse(localStorage.getItem(key) || "[]");
-    }
+function addFaculty() {
+  const name = document.getElementById("facultyName").value.trim();
+  const dept = document.getElementById("facultyDept").value.trim();
 
-    const facultyTable = document.getElementById("faculty-table");
-    const facultySearch = document.getElementById("facultySearch");
-    let facultyList = loadFromStorage("faculty");
+  if (!name || !dept) {
+    alert("Please fill all fields.");
+    return;
+  }
 
-    function renderFaculty() {
-      facultyTable.innerHTML = "";
-      let filtered = facultyList.filter(f => {
-        const term = facultySearch.value.toLowerCase();
-        return f.name.toLowerCase().includes(term) || f.email.toLowerCase().includes(term);
-      });
-      filtered.forEach((fac, i) => {
-        const row = document.createElement("tr");
-        row.setAttribute("data-aos", "fade-up");
-        row.innerHTML = `
-          <td><input type="text" class="form-control" value="${fac.name}" onchange="updateName(${i}, this.value)"></td>
-          <td><input type="email" class="form-control" value="${fac.email}" onchange="updateEmail(${i}, this.value)"></td>
-          <td>
-            <select class="form-select" onchange="updateAttendance(${i}, this.value)">
-              <option value="present" ${fac.status === 'present' ? 'selected' : ''}>Present</option>
-              <option value="absent" ${fac.status === 'absent' ? 'selected' : ''}>Absent</option>
-            </select>
-          </td>
-          <td><button class='btn btn-sm btn-danger' onclick='deleteFaculty(${i})'>
-            <i class="bi bi-trash-fill me-1"></i> Delete
-          </button></td>
-        `;
-        facultyTable.appendChild(row);
-      });
-      AOS.refresh();
-      updateLiveDashboard();
-    }
+  const index = facultyData.length;
+  facultyData.push({ name, dept });
 
-    function updateName(index, value) {
-      facultyList[index].name = value;
-      saveToStorage("faculty", facultyList);
-    }
-    function updateEmail(index, value) {
-      facultyList[index].email = value;
-      saveToStorage("faculty", facultyList);
-    }
-    function updateAttendance(index, status) {
-      facultyList[index].status = status;
-      saveToStorage("faculty", facultyList);
-      updateLiveDashboard();
-    }
+  const tr = document.createElement("tr");
+  tr.innerHTML = `
+    <td>${name}</td>
+    <td>${dept}</td>
+    <td><input type="checkbox" class="checkbox" onchange="markAttendance(${index})" /></td>
+    <td class="timestamp" id="time-${index}">-</td>
+  `;
+  document.getElementById("facultyBody").appendChild(tr);
 
-    function deleteFaculty(index) {
-      if (confirm("Are you sure you want to delete this faculty?")) {
-        facultyList.splice(index, 1);
-        saveToStorage("faculty", facultyList);
-        renderFaculty();
-      }
-    }
+  closeAddPopup();
+  document.getElementById("facultyName").value = "";
+  document.getElementById("facultyDept").value = "";
+}
 
-    document.getElementById("addFacultyBtn").addEventListener("click", () => {
-      const name = document.getElementById("faculty-name").value.trim();
-      const email = document.getElementById("faculty-email").value.trim();
-      if (!name || !email) return alert("All fields are required.");
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert("Enter valid email.");
-      facultyList.push({ name, email, status: "present" });
-      saveToStorage("faculty", facultyList);
-      renderFaculty();
-      document.getElementById("faculty-name").value = "";
-      document.getElementById("faculty-email").value = "";
+    const facultyData = [
+      { name: "Dr. Priya S", dept: "CSE" },
+      { name: "Mr. Arun K", dept: "ECE" },
+      { name: "Ms. Rekha R", dept: "IT" },
+      { name: "Dr. Ravi M", dept: "EEE" },
+    ];
+
+    const tbody = document.getElementById("facultyBody");
+
+    facultyData.forEach((f, index) => {
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>${f.name}</td>
+        <td>${f.dept}</td>
+        <td><input type="checkbox" class="checkbox" onchange="markAttendance(${index})" /></td>
+        <td class="timestamp" id="time-${index}">-</td>
+      `;
+
+      tbody.appendChild(tr);
     });
 
-    facultySearch.addEventListener("input", renderFaculty);
-
-    function updateLiveDashboard() {
-      const total = facultyList.length;
-      const present = facultyList.filter(f => f.status === "present").length;
-      const absent = total - present;
-      localStorage.setItem("facultyStats", JSON.stringify({ total, present, absent }));
+    function markAttendance(index) {
+      const now = new Date().toLocaleTimeString();
+      document.getElementById(`time-${index}`).innerText = now;
     }
 
-    renderFaculty();
+    function exportToCSV() {
+      let csvContent = "Name,Department,Time\n";
+      facultyData.forEach((f, i) => {
+        const time = document.getElementById(`time-${i}`).innerText;
+        csvContent += `${f.name},${f.dept},${time}\n`;
+      });
+
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.setAttribute("href", url);
+      link.setAttribute("download", "faculty_attendance.csv");
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
   </script>
 </body>
 </html>

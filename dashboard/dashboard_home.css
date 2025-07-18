@@ -34,10 +34,18 @@
       color: white;
       text-decoration: none;
       cursor: pointer;
+      transition: 0.3s;
     }
     .sidebar a:hover {
       color: #ffc107;
     }
+           .sidebar a.active,
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0.55rem;
+    }
+
     .main {
       margin-left: 0;
       padding: 1rem;

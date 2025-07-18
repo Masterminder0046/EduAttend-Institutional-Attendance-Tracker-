@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Institution Report</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+  <style>
+        .sidebar a {
+      display: block;
+      margin: 0.75rem 0;
+      color: white;
+      text-decoration: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      color: #ffc107;
+    }
+           .sidebar a.active,
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 0.5rem 0.55rem;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+  <div class="flex"  style="color: #9b0eff;">
+    <!-- Sidebar -->
+    <div class="w-64 bg-blue-900 text-white min-h-screen p-5" style="color: #ffffff;">
+      <h2 class="text-2xl font-bold mb-6">EduAttend</h2>
+      <nav>
+        <ul class="sidebar">
+          <li><a href="Dashboard-home.html">🏠 Dashboard</a></li>
+          <li><a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Student_Manage.html">👨‍🎓 Manage Students</a></li>
+          <li>   <a href="https://masterminder0046.github.io/EduAttend-Institutional-Attendance-Tracker-/manage/Faulty_Manage.html">👩‍🏫 Manage Faculty</a></li>
+          <li> <a href="attendance-overiew.html">📅 Attendance Overview</a></li>
+          <li>  <a href="time_table.html">📘 Class Schedules</a></li>
+          <li>  <a onclick="downloadReport()">⬇️ Download Reports</a></li>
+          <li> <a href="settings.html">⚙️ Settings</a></li>
+          <li>  <a href="help&support.html">💬 Help & Support</a></li>
+        </ul>
+      </nav>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex-1 p-6">
+      <h1 class="text-3xl font-bold mb-6 text-center">📊 Institution Report Overview</h1>
+
+      <!-- Charts -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+        <div class="bg-white rounded-2xl p-4 shadow-xl">
+          <h2 class="text-xl font-bold mb-4 text-center">Students by Department</h2>
+          <canvas id="studentChart"></canvas>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-xl">
+          <h2 class="text-xl font-bold mb-4 text-center">Faculty by Department</h2>
+          <canvas id="facultyChart"></canvas>
+        </div>
+        <div class="bg-white rounded-2xl p-4 shadow-xl">
+          <h2 class="text-xl font-bold mb-4 text-center">Overall Summary</h2>
+          <canvas id="overallChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Table -->
+      <div class="bg-white rounded-2xl p-6 shadow-xl">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">Detailed Report</h2>
+          <button onclick="exportTableToCSV()" class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700">⬇️ Download CSV</button>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm text-left text-gray-500">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
+              <tr>
+                <th class="px-4 py-3">Type</th>
+                <th class="px-4 py-3">Name</th>
+                <th class="px-4 py-3">Department</th>
+                <th class="px-4 py-3">Year</th>
+              </tr>
+            </thead>
+            <tbody id="reportTableBody" class="bg-white">
+              <!-- Dynamic Rows Here -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const studentData = {
+      labels: ['CSE', 'ECE', 'EEE', 'MECH'],
+      datasets: [{
+        label: 'Students',
+        data: [120, 90, 70, 60],
+        backgroundColor: ['#3B82F6', '#F59E0B', '#10B981', '#EF4444'],
+        borderRadius: 6
+      }]
+    };
+    const facultyData = {
+      labels: ['CSE', 'ECE', 'EEE', 'MECH'],
+      datasets: [{
+        label: 'Faculty',
+        data: [12, 9, 8, 7],
+        backgroundColor: ['#6366F1', '#FBBF24', '#34D399', '#F87171'],
+        borderRadius: 6
+      }]
+    };
+    const overallData = {
+      labels: ['Students', 'Faculty'],
+      datasets: [{
+        label: 'Overall',
+        data: [340, 36],
+        backgroundColor: ['#06B6D4', '#8B5CF6'],
+        borderRadius: 6
+      }]
+    };
+
+    new Chart(document.getElementById('studentChart'), {
+      type: 'bar',
+      data: studentData,
+      options: {responsive: true, plugins: {legend: {display: false}}}
+    });
+
+    new Chart(document.getElementById('facultyChart'), {
+      type: 'bar',
+      data: facultyData,
+      options: {responsive: true, plugins: {legend: {display: false}}}
+    });
+
+    new Chart(document.getElementById('overallChart'), {
+      type: 'doughnut',
+      data: overallData,
+      options: {responsive: true}
+    });
+
+    // Table Data (Dummy)
+    const reportData = [
+      { type: 'Student', name: 'Arjun', dept: 'CSE', year: '2nd' },
+      { type: 'Student', name: 'Meena', dept: 'ECE', year: '1st' },
+      { type: 'Faculty', name: 'Mr. Ramesh', dept: 'MECH', year: 'N/A' },
+      { type: 'Student', name: 'Vikram', dept: 'EEE', year: '3rd' },
+      { type: 'Faculty', name: 'Ms. Latha', dept: 'CSE', year: 'N/A' }
+    ];
+
+    const tableBody = document.getElementById('reportTableBody');
+    reportData.forEach(item => {
+      const row = `<tr>
+        <td class="px-4 py-3">${item.type}</td>
+        <td class="px-4 py-3">${item.name}</td>
+        <td class="px-4 py-3">${item.dept}</td>
+        <td class="px-4 py-3">${item.year}</td>
+      </tr>`;
+      tableBody.innerHTML += row;
+    });
+
+    function exportTableToCSV() {
+      let csv = 'Type,Name,Department,Year\n';
+      reportData.forEach(r => {
+        csv += `${r.type},${r.name},${r.dept},${r.year}\n`;
+      });
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      saveAs(blob, 'Institution_Report.csv');
+    }
+  </script>
+</body>
+</html>
